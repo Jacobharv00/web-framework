@@ -1,0 +1,23 @@
+# Dependency directories
+node_modules/
+
+# TypeScript Compiler output
+dist/
+*.tsbuildinfo
+
+# IDE and editors
+.idea/
+.vscode/
+
+# Parcel cache directory
+.parcel-cache/
+
+# Environment variables
+.env
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
