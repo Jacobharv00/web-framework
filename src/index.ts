@@ -1,11 +1,5 @@
-import {User} from "./models/User";
+import {User} from './models/User'
 
-const user = new User({name: 'Ted', age: 34})
+const user = new User({name: 'new record', age: 1})
 
-user.set({name: 'New Name'})
 
-const userName = user.get("name")
-const userAge = user.get("age")
-
-console.log('userName:', userName)
-console.log('userAge:', userAge)

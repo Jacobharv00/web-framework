@@ -1,0 +1,21 @@
+{
+  "devDependencies": {
+    "buffer": "^6.0.3",
+    "typescript": "^3.4.5"
+  },
+  "dependencies": {
+    "axios": "^1.6.8",
+    "json-server": "^0.17.4"
+  },
+  "scripts": {
+    "start:db": "json-server -w db.json",
+    "start:parcel": "npx parcel index.html"
+  },
+  "name": "web",
+  "description": "Web Framework",
+  "version": "1.0.0",
+  "main": "index.js",
+  "keywords": [],
+  "author": "Jacob Harvey",
+  "license": "ISC"
+}
