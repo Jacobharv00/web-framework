@@ -1,9 +1,13 @@
-import {User} from './models/User'
+import {Collection} from "./models/Collection";
+import {User, UserProps} from "./models/User";
 
-const user = new User({id:1, name: 'Newer Name', age: 0})
+const collection = new Collection<User, UserProps>(
+    'http://localhost:3000/users',
+    (json:UserProps) => User.buildUser(json)
+)
 
-user.on('save', () => {
-    console.log('User:',user)
+collection.on('change', () => {
+    console.log('Collection:', collection)
 })
 
-user.save()
+collection.fetch()
