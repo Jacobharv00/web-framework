@@ -1,23 +1,26 @@
-import {User} from "../models/User";
+import {View} from "./View";
 
-export class UserForm {
-    constructor(public parent: Element, public model: User) {}
-    
-    eventsMap(): {[key: string]: () => void} {
+export class UserForm extends View {
+    eventsMap(): { [key: string]: () => void } {
         return {
-            'click:button': this.onButtonClick,
-            'mouseenter:h1': this.onMouseEnter
+            'click:.set-age': this.onSetAgeClick,
+            'click:.set-name': this.onSetNameClick
         }
     }
-    
-    onButtonClick():void {
-        console.log('HI')
+
+    onSetAgeClick = () => {
+        this.model.setRandomAge()
     }
-    
-    onMouseEnter():void {
-        console.log('Entered')
+
+    onSetNameClick = () => {
+        const input = this.parent.querySelector('input')
+
+        if (input) {
+            const name = input.value
+            this.model.set({name})
+        }
     }
-    
+
     template(): string {
         return `
             <div>
@@ -25,28 +28,8 @@ export class UserForm {
                 <div>User name: ${this.model.get('name')}</div>
                 <div>User age: ${this.model.get('age')}</div>
                 <input />
-                <button>Click Me</button>
+                <button class="set-name">Change Name</button>
+                <button class="set-age">Set Random Age</button>
             </div>`
-    }
-    
-    bindEvents(fragment: DocumentFragment):void {
-        const eventsMap = this.eventsMap
-        
-        for(let eventKey in eventsMap) {
-            const [eventName, selector] = eventKey.split(':')
-            
-            fragment.querySelectorAll(selector).forEach(element => {
-                //@ts-ignore
-                element.addEventListener(eventName, eventsMap[eventKey])
-            })
-        }
-    }
-    
-    render():void {
-        const templateElement = document.createElement('template')
-        templateElement.innerHTML = this.template()
-        
-        this.bindEvents(templateElement.content)
-        this.parent.append(templateElement.content)
     }
 }
