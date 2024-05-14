@@ -1,17 +1,15 @@
-import {User} from "../models/User";
+import { Model, HasId } from '../models/Model';
 
-// Code for upcoming lecture
-// import { Model, HasId } from '../models/Model';
-//
-// export abstract class View<T extends Model<K>, K extends HasId> {
-
-export abstract class View {
-    constructor(public parent: Element, public model: User) {
+export abstract class View<T extends Model<K>, K extends HasId> {
+    constructor(public parent: Element, public model: T) {
         this.bindModel()
     }
     
-    abstract eventsMap():{[key:string]: () => void}
     abstract template(): string
+    
+    eventsMap():{[key:string]: () => void} {
+        return {}
+    }
 
     // Re-render onChange
     bindModel() {
@@ -27,7 +25,6 @@ export abstract class View {
             const [eventName, selector] = eventKey.split(':')
 
             fragment.querySelectorAll(selector).forEach(element => {
-                //@ts-ignore
                 element.addEventListener(eventName, eventsMap[eventKey])
             })
         }
