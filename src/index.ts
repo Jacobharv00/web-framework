@@ -1,14 +1,18 @@
-import {UserForm} from "./views/UserForm";
+import {UserList} from './views/UserList'
+import {Collection} from "./models/Collection";
 import {User} from "./models/User";
 
-const user = User.buildUser({name: 'Name', age: 20})
+import type {UserProps} from "./models/User";
 
-const root = document.getElementById('root')
+const users = new Collection('http://localhost:3000/users', (json: UserProps) => {
+    return User.buildUser(json)
+})
 
-if(root) {
-    const userForm = new UserForm(root, user)
-    userForm.render()
-} else {
-    throw new Error('No Root element')
-}
+users.on('change', () => {
+    const root = document.getElementById('root')
+    if(root) {
+        new UserList(root, users).render()
+    }
+}) 
 
+users.fetch()
